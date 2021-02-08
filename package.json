@@ -8,8 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "fs": "0.0.1-security",
+    "plotly": "^1.0.6",
+    "plotly.js-dist": "^1.58.4",
+    "vue": "^2.6.11",
+    "vue-plotly": "^1.1.0",
+    "vue-router": "^3.4.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
