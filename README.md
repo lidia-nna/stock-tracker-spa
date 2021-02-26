@@ -1,6 +1,6 @@
 # Stock Tracker
 
-A VueJs and Flask Web SPA to track selected stocks.
+A VueJs/Flask SPA app to track selected stocks.
 
 ## Installation
 
