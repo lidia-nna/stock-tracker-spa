@@ -1,4 +1,5 @@
-import axios from 'axios';
+//import axios from 'axios';
+import apiAxios from '../utils/apiAxios';
 
 const state = {
     tickers :[],
@@ -57,6 +58,7 @@ const getters = {
                     {   
                         id: ticker.id,
                         symbol: ticker.ticker,
+                        stock_nr: ticker.stock_nr,
                         bought: ticker.share_price,
                         upperLimit: ticker.upper_threshold,
                         lowerLimit: ticker.lower_threshold
@@ -77,9 +79,9 @@ const getters = {
 
         let all_after = JSON.parse(JSON.stringify(all))
 
-        all_after.map((stock,i) => {
-            if(stock.symbol === "BWY.L") {
-                stock.symbol = `BWY.L_${i}`
+        all_after.map((stock) => {
+            if(stock.stock_nr !== 1) {
+                stock.symbol = `${stock.symbol} (${stock.stock_nr})`
             }
             return stock
         })
@@ -92,21 +94,22 @@ const getters = {
     
 // };
 const actions = {
-    getTickers({commit}) {   
-        return axios.get('http://localhost:5000/summary')
+    getTickers({commit, rootState}) {   
+        console.log('access', rootState.auth.accessToken)
+        return apiAxios.get('/summary')
         .then(response => {
             commit('setTickers', response.data) 
             return "Success"   
         })
         .catch(error => {
-            console.log(error)
+            console.error(error)
             return "Failed"})
     },
-    getAllTimeSeries({commit,getters}){
+    getAllTimeSeries({commit, state, getters}){
         let container = [];
         let values = {};
         let myPromises = getters.symbols.map(symbol => 
-           axios.get('http://localhost:5000/charts/daily?ticker='+ symbol)
+            apiAxios.get('/charts/daily?ticker='+ symbol)
         );
 
         return Promise.all(myPromises)

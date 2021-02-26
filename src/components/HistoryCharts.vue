@@ -1,6 +1,6 @@
 
 <template>
-    <v-card
+    <v-card 
     :loading="!dataLoaded"
     >
     <v-tabs
@@ -12,46 +12,54 @@
         v-for="(item, i) in items"
         :key="i"
       >
-        {{ item.symbol }}
+        {{ item }}
       </v-tab>
     
     <v-tabs-items dark v-model="tab" v-if="dataLoaded" >
-      <v-container>
+      <!-- <v-container> -->
         <v-row class="d-flex"> 
           <v-col>
             <v-tab-item class="colors" 
-              v-for="(item, i) in items"
+              v-for="(item,i) in items"
               :key="i"
             >
-              <daily-chart :item="item" ></daily-chart>
+            <v-row class="d-flex mx-auto">
+                <v-col>
+                    <weekly-chart :symbol="item"></weekly-chart>
+                </v-col>
+                <v-col>
+                    <yearly-chart :symbol="item" ></yearly-chart>
+                </v-col>
+            </v-row>
+            <v-row class="d-flex mx-auto">
+              <v-col>
+                <FTChart :symbol="item"></FTChart>
+              </v-col>
+                
+            </v-row>
+              
             </v-tab-item> 
             
           </v-col>
           
         </v-row>
           
-      </v-container> 
+      <!-- </v-container>  -->
 
     </v-tabs-items>
-  </v-tabs>
-  <v-row class="d-flex align-stretch" justify="center" >
-    <v-col cols='12' sm='12' md='12' lg='11' xl='11'>
-       <summary-table v-if="dataLoaded" @selectedId="onSelected" :selectedRow='selectRow'></summary-table>
-    </v-col>
-  </v-row>
- 
+  </v-tabs> 
   </v-card>
 </template>
 
 <script>
-import { mapActions, mapGetters} from 'vuex'
-// import Mytest from './Mytest.vue'
-import DailyChart from './DailyChart.vue'
-import SummaryTable from './SummaryTable'
-//import { mapState } from 'vuex'
+import WeeklyChart from './WeeklyChart'
+import YearlyChart from './YearlyChart.vue'
+import FTChart from './FTChart'
+import {mapActions, mapGetters} from 'vuex'
+
 export default {
- components: { DailyChart, SummaryTable },
-    name:"ChartNav",
+ components: { WeeklyChart, YearlyChart, FTChart },
+    name:"HistoryChart",
     data () {
       return {
         tab: null,
@@ -61,8 +69,7 @@ export default {
     },
     computed: {
       ...mapGetters({
-        // symbols: 'symbols',
-        items: 'allData',
+        items: 'symbols',
         isLoggedIn: 'isLoggedIn',
         // headers: 'headers'
         
@@ -70,17 +77,17 @@ export default {
      
     },
     methods: {
-      ...mapActions(['getAllTimeSeries','getTickers']),
+      ...mapActions(['getTickers']),
     
       async initialize() {
-        const resp = await this.getTickers()
-        if (resp == "Success") {
-          const resp2 = await this.getAllTimeSeries()
-            if (resp2 == "Success") {
+        if (!this.items) {
+            const resp = await this.getTickers()
+            if (resp == "Success") {
               this.dataLoaded = true
             }
         }
-      },
+        this.dataLoaded = true
+     },
       onSelected($event) {
         console.log('OnSelectedEvent:', $event)
         // this.tab = $event

@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiAxios from '../utils/apiAxios';
 
 const state = {
     dialog: false,
@@ -50,18 +50,18 @@ const getters = {
 const actions = {
   async getMyStocks({commit}){
     try {
-      const items = await axios.get('http://localhost:5000/tickers')
+    const items = await apiAxios.get('/tickers')
       commit('setMyStocks', items.data)
       return "Success"
-    } catch {
-      throw new Error('Unable to retrieve tickers data.')
+    } catch (err){
+      console.log(err)
+      throw err
+      //throw new Error('Unable to retrieve tickers data.')
     }
   },
   async putMyStocks({state}) {
     try {
-      await axios.put('http://localhost:5000/ticker', state.editedItem)
-      //dispatch('today/getTickers',{}, {root:true})
-      //commit('updateMyStocks')
+      await apiAxios.put('ticker', state.editedItem)
       return "Success"
     } catch (err) {
         console.error("Unable to retrieve tickers data")
@@ -70,7 +70,11 @@ const actions = {
   },
   async postMyStocks({state}) {
     try {
-      await axios.post('http://localhost:5000/ticker', state.editedItem)
+      await apiAxios.post('/ticker', state.editedItem, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       // dispatch('today/getTickers',{}, {root:true})
       return "Success"
     } catch (err) {
@@ -78,7 +82,7 @@ const actions = {
         throw err;
     }
   },
-  async completeMyStockUpdate ({commit, state, dispatch}) {
+  async completeMyStockUpdate ({state, dispatch}) {
     var resp = null
     try {
       //commit('updateMyStocks')
@@ -95,9 +99,18 @@ const actions = {
       console.error(err);
     }
     if (resp != null) {
-      commit('updateMyStocks')
+      dispatch('getMyStocks')
     }
-  },  
+  },
+  async deleteMyStocks({state}) {
+    try {
+      await apiAxios.delete(`/ticker?id=${state.editedItem.id}`)
+      return "Success"
+    } catch(err) {
+      console.error("Removal unsuccessful!")
+      throw err;
+    }
+  }, 
   editItem ({commit}, item) {
       commit('setEditedIndex', item)
       commit('setEditedItem', item)
@@ -115,9 +128,18 @@ const actions = {
   update ({commit, state}) {
     commit('updateMyStocks', state)
   },
-  deleteItemConfirm1({state}) {
-    state.myStocks.splice(state.editedIndex, 1)
-  },
+  async deleteItemConfirm1({dispatch}) {
+    try {
+      var resp = await dispatch('deleteMyStocks')
+    } catch(error){
+        console.error(error)
+    }
+    if (resp=="Success"){
+      console.log('ticker deleted response', resp)
+      dispatch('getMyStocks')
+      //state.myStocks.splice(state.editedIndex, 1)
+    }
+  }
 };
 
 const mutations = {
@@ -141,14 +163,14 @@ const mutations = {
   setMyStocks(state, data) {
     state.myStocks = data
 },
-  updateMyStocks (state) {
-    if (state.editedIndex > -1) {
-        Object.assign(state.myStocks[state.editedIndex], state.editedItem)
-    } else {
-        state.myStocks.push(state.editedItem)
-    }
+  // updateMyStocks (state) {
+  //   if (state.editedIndex > -1) {
+  //       Object.assign(state.myStocks[state.editedIndex], state.editedItem)
+  //   } else {
+  //       state.myStocks.push(state.editedItem)
+  //   }
    
-  }
+  // }
 };
 
 export default {

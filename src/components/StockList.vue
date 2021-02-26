@@ -23,7 +23,9 @@
                 New Stock
             </v-btn>
         </template>
-        <v-card>
+        <v-card
+        ref = "form"
+        >
             <v-card-title>
                 <span class="headline">{{ formTitle }}</span>
             </v-card-title>
@@ -130,6 +132,7 @@
             Cancel
             </v-btn>
             <v-btn
+            :disabled="!valid"
             color="blue darken-1"
             text
             @click="save"
@@ -222,7 +225,7 @@ import { mapGetters } from 'vuex';
       return {
         search: "",
         dataLoaded: false,
-        valid: false,
+        valid: true,
         firstname: '',
         lastname: '',
         nameRules: [
@@ -294,7 +297,7 @@ import { mapGetters } from 'vuex';
         },
     },
     methods: {
-      ...mapMutations(['setDialog', 'setDialogDelete', 'updateMyStocks']),
+      ...mapMutations(['setDialog', 'setDialogDelete']),
       ...mapActions([
         'getMyStocks', 
         'editItem', 
@@ -312,6 +315,7 @@ import { mapGetters } from 'vuex';
         this.setDialog(false)
         this.$nextTick(() => {
           this.onUpdate()
+          this.resetValidation()
           //this.clear()
         })
       },
@@ -326,17 +330,30 @@ import { mapGetters } from 'vuex';
 
       async save () {
         //this.submit()
+        this.validate()
         await this.completeMyStockUpdate()
-        this.close() 
+        this.resetValidation()
+        this.close()
+        
       },
-      clear () {
-        this.$v.$reset()
-       this.name = ''
-     },
-      submit () {
-      this.$v.$touch()
+      validate () {
+        this.$refs.form.validate()
       },
-    },
+      reset () {
+        this.$refs.form.reset()
+      },
+      resetValidation () {
+        this.$refs.form.resetValidation()
+      },
+
+    //   clear () {
+    //     this.$v.$reset()
+    //    this.name = ''
+    //  },
+    //   submit () {
+    //   this.$v.$touch()
+    //   },
+  },
 
     watch: {
       dialog (val) {

@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters} from 'vuex'
+import { mapState, mapGetters, mapActions} from 'vuex'
 export default {
     name: "SummaryTable",
     props:['selectedRow'],
@@ -75,8 +75,7 @@ export default {
         }
     },
     methods: {
-        
-        //...mapActions(['getTickers']),
+        ...mapActions(['getMyStocks']),
         liveColor(ticker) {
             if (ticker.live > ticker.open){
                 return '#00BCD4'
@@ -124,17 +123,13 @@ export default {
         //         })
         //     return null
     //}
-    }   
+    },   
 
-    // mounted()  {
-    //     if (this.tickers) {
-    //         this.dataLoaded = true
-    //     } else {
-    //         this.getTickers().then(() =>
-    //             this.dataLoaded = true
-    //         )
-    //     }
-    // }
+    mounted()  {
+            this.getMyStocks().then(() =>
+                this.dataLoaded = true
+            )
+        }
 }
 </script>
 

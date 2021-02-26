@@ -1,17 +1,16 @@
 <template>
     <div>
-        History view
+        <history-charts></history-charts>
     </div>
 </template>
 
 <script>
-// import ChartNav from '../components/ChartNav'
+import HistoryCharts from '../components/HistoryCharts'
 // import SummaryTable from '../components/SummaryTable'
 
 export default {
     components: {
-        // ChartNav,
-        // SummaryTable
+        HistoryCharts
     }
 }
 </script>
