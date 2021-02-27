@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import {mapActions, mapState} from 'vuex'
+import {mapActions, mapState, mapMutations} from 'vuex'
 export default {
     name: 'LoginForm',
     data: () => ({
@@ -89,17 +89,19 @@ export default {
     }),
     computed: {
       ...mapState({
-        authStatus: (state) => (state.auth.authStatus)
+        authStatus: (state) => state.auth.authStatus
       })
     },
 
     methods: {
+      ...mapMutations(['setStatus']),
       ...mapActions(['login', 'register']),
       validate () {
         this.$refs.form.validate()
       },
       reset () {
         this.$refs.form.reset()
+        this.setStatus("")
       },
       resetValidation () {
         this.$refs.form.resetValidation()
@@ -115,8 +117,8 @@ export default {
           console.error('Login',error)
           this.error=true
         }
-        this.reset()
-        this.$router.push("/user");
+        // this.reset()
+        // this.$router.push("/user");
       }
     },
 }

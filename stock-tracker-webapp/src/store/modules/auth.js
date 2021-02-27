@@ -44,11 +44,11 @@ const actions = {
             await axios.post(config.dev.apiURL + '/register', details, { 
                 headers: {'Content-Type': 'multipart/form-data' }
             })
-            router.push('/auth');
+            router.push('/login');
         }
         catch (error){
-            commit('setStatus', error)
-            console.log(error)
+            commit('setStatus', error.response.status + ' ' + error.response.statusText + ': ' + error.response.data )
+            throw error
             }
 
         }
@@ -60,12 +60,22 @@ const actions = {
         commit('setStatus', 'success')
         commit('updateAccessToken', tokens.access_token)
         commit('updateRefreshToken', tokens.refresh_token)
-        router.push('/');
+        router.push('/user');
         // return 'Success', 200
  
     } catch(error) {
         commit('setStatus', error.response.status + ' ' + error.response.statusText + ': ' + error.response.data )
         throw error
+        }
+
+    },
+    async getConfToken({commit},json) {
+        try {
+            return axios.post(config.dev.apiURL + '/unconfirmed', json, { 
+            headers: {'Content-Type': 'application/json' }
+        })} catch(error){
+            commit('setStatus', error.response.status + ' ' + error.response.statusText + ': ' + error.response.data )
+            throw error
         }
 
     },

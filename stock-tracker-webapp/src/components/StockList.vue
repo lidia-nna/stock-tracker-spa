@@ -24,7 +24,7 @@
             </v-btn>
         </template>
         <v-card
-        ref = "form"
+        ref="form"
         >
             <v-card-title>
                 <span class="headline">{{ formTitle }}</span>
@@ -278,7 +278,7 @@ import { mapGetters } from 'vuex';
         editedItem: state => state.stocks.editedItem,
         defaultItem: state => state.stocks.defaultItem
       }),
-      ...mapGetters(['formTitle']),
+      ...mapGetters(['formTitle', 'allData']),
       getDate() {
         return new Date().toJSON().split('T')[0] 
       },
@@ -332,7 +332,7 @@ import { mapGetters } from 'vuex';
         //this.submit()
         this.validate()
         await this.completeMyStockUpdate()
-        this.resetValidation()
+        //this.resetValidation()
         this.close()
         
       },
@@ -361,6 +361,9 @@ import { mapGetters } from 'vuex';
       },
       dialogDelete (val) {
         val || this.closeDelete()
+      },
+      tickers: function() {
+        this.tickers == [] ? this.allData = [] : this.tickers
       }
     },
 

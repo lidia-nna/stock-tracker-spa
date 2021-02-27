@@ -1,6 +1,16 @@
 
 <template>
+  <div>
+    <br>
+    <v-btn
+    v-if="!AreStocks"
+    color="#00bcd4"
+    @click="$router.push('/user/mystocks')"
+    >
+      Add your stocks
+    </v-btn>
     <v-card
+    v-else
     :loading="!dataLoaded"
     >
     <v-tabs
@@ -41,6 +51,7 @@
   </v-row>
  
   </v-card>
+</div>
 </template>
 
 <script>
@@ -64,6 +75,7 @@ export default {
         // symbols: 'symbols',
         items: 'allData',
         isLoggedIn: 'isLoggedIn',
+        AreStocks: 'AreStocks'
         // headers: 'headers'
         
       }),
@@ -73,6 +85,7 @@ export default {
       ...mapActions(['getAllTimeSeries','getTickers']),
     
       async initialize() {
+      try {
         const resp = await this.getTickers()
         if (resp == "Success") {
           const resp2 = await this.getAllTimeSeries()
@@ -80,6 +93,10 @@ export default {
               this.dataLoaded = true
             }
         }
+      } catch(error) {
+        console.log(error)
+      }
+        
       },
       onSelected($event) {
         console.log('OnSelectedEvent:', $event)
@@ -93,8 +110,9 @@ export default {
       }
     },
     async mounted() {
-      await this.initialize()
-      
+      if (this.AreStocks) {
+        await this.initialize()
+      }
     }
       
 }

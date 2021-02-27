@@ -103,7 +103,8 @@ const actions = {
         })
         .catch(error => {
             console.error(error)
-            return "Failed"})
+            throw error
+        })
     },
     getAllTimeSeries({commit, state, getters}){
         let container = [];

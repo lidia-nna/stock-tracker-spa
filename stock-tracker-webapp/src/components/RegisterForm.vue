@@ -5,7 +5,13 @@
     lazy-validation
     @submit.prevent="onSubmit"
   >
-
+    <v-card-text class="pink--text" v-if="error">{{authStatus}}</v-card-text>
+    <v-card-text class="cyan--text" v-if="info">{{authStatus}}</v-card-text>
+    <v-btn 
+    v-if="resendConfirmation" 
+    color="#00bcd4"
+    @click="resendToken"
+    class="mr-4">Re-send token</v-btn>
     <v-card>
       <br>
       <v-row class="d-flex justify-center" >
@@ -56,7 +62,6 @@
         ></v-checkbox>
         </v-col>
       </v-row>
-   
     <v-row class="d-flex justify-center">
     <v-btn
       :disabled="!valid"
@@ -79,12 +84,15 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapMutations, mapState} from 'vuex'
 export default {
     name: 'RegisterForm',
     data: () => ({
       valid: true,
-      show:false,
+      show: false,
+      error: false,
+      info: false,
+      resendConfirmation:false,
       username: '',
       nameRules: [
         v => !!v || 'Name is required',
@@ -109,8 +117,11 @@ export default {
       // }
     }),
     computed: {
+      ...mapState({
+        authStatus: (state) => state.auth.authStatus
+      }),
       confpasswordRules() {
-        return [this.confpassword == this.password || 'Password must match']
+        return [this.confpassword == this.password && this.confpassword!= '' || 'Password must match' ]
       },
       regForm (){
         let form = new FormData();
@@ -122,20 +133,47 @@ export default {
     },
     
     methods: {
-      ...mapActions(['login', 'register']),
+      ...mapMutations(['setStatus']),
+      ...mapActions(['login', 'register', 'getConfToken']),
       validate () {
         this.$refs.form.validate()
       },
       reset () {
         this.$refs.form.reset()
+        this.setStatus("")
       },
       resetValidation () {
         this.$refs.form.resetValidation()
       },
       async onSubmit () {
+        console.log('VALIDATE', this.validate)
         this.validate()
-        await this.register(this.regForm)
-        this.reset()
+        try {
+          await this.register(this.regForm)
+        } catch(error) {
+          console.error('Sign Up', error)
+          this.error=true
+          if(error.response.status === 403) {
+            this.resendConfirmation = true
+          }
+          //this.reset()
+        }
+      },
+      async resendToken() {
+        try {
+          this.resendConfirmation=!this.resendConfirmation
+          console.log('EMAIL', this.email)
+          const resp = await this.getConfToken(JSON.stringify({email: this.email}))
+          this.error = false 
+          this.info = true 
+          this.setStatus(resp.data)
+          this.$refs.form.reset()
+        } catch (error) {
+          console.error('Resend Token', error)
+          this.error=true
+          // this.setStatus(error.response.status + ' ' + error.response.statusText + ': ' + error.response.data )
+        }
+          
       }
     },
 }
