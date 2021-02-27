@@ -44,8 +44,9 @@ def register():
         print (request.data)
         return "Invalid format", 400
     data = request.form
-    user = UserModel.check_user(email=data.get('email')) 
+    user = UserModel.check_user(username=data.get('username')) 
     if user and user.confirmed:
+        print(user)
         return "Already registered", 409
     elif user and not user.confirmed:
         return "Unconfirmed account", 403     
@@ -64,16 +65,16 @@ def register():
     except Exception as e:
         print(e)
         return "Fail", 500
-    user = UserModel(email=data.get('email'), username=data.get('username'))
-    user.set_password(data.get('password'))
-    # user.set_username()
-    
-    try:
-        user.save_to_db()
-    except Exception as e:
-        return {'message': f'Something went wrong: {e}'}, 400
-    else: 
-        return "User registered", 200
+    else:
+        user = UserModel(email=data.get('email'), username=data.get('username'))
+        user.set_password(data.get('password'))
+        # user.set_username()
+        try:
+            user.save_to_db()
+        except Exception as e:
+            return {'message': f'Something went wrong: {e}'}, 400
+        else: 
+            return "User registered", 200
 
 
 # update password or email       
@@ -95,7 +96,10 @@ def delete():
 
 @users.route('/unconfirmed', methods=["POST"])
 def unconfirmed_registration():
-    data = request.form
+    if not request.is_json:
+        return "Invalid format", 400
+    data = request.get_json()
+    print(data)
     user = UserModel.check_user(email=data.get('email')) 
     if user and not user.confirmed:
         token = Token()
@@ -116,20 +120,20 @@ def confirm_registration(token):
     # if not request.args:
     #     return "Missing token", 400
     # token = request.args.get('token')
-    try:
-        tokenclass = Token()
-        email = tokenclass.confirm_token(token)
-    except:
-        return 'The confirmation link is invalid or has expired.', 400
-    else:
-        user = UserModel.check_user(email=email)    
-        if not user.confirmed:
-            user.confirmed = True
-            user.confirmed_on = datetime.datetime.now()
-            user.save_to_db()
-            return "Account confirmed", 201
-        return "Already confirmed", 409
+    tokenclass = Token()
+    email = tokenclass.confirm_token(token)
+    if not email:
+        return "Invalid or expired token", 400
+    user = UserModel.check_user(email=email)   
+    if not user.confirmed:
+        user.confirmed = True
+        user.confirmed_on = datetime.datetime.now()
+        user.save_to_db()
+        return "Account confirmed", 201
+    return "Already confirmed", 409
 
+
+        
 
 @users.route('/token/refresh', endpoint='refresh_token', methods=["GET"])
 @jwt_required(refresh=True)

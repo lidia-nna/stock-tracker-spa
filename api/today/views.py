@@ -16,6 +16,7 @@ def get_summary():
     try:
         summary.get_report()
     except Exception as e:
-        print( str(e))
+        if 'No stocks found' in str(e):
+            return str(e)
         return "Error generating greport", 500
     return jsonify(summary.get_report())    

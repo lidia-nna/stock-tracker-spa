@@ -11,7 +11,7 @@ import os
 
 
 
-@pytest.fixture(scope = "session")
+@pytest.fixture()
 def app():
     _app = create_app(cfg=TestConfig)
     _app.testing = True
@@ -19,7 +19,7 @@ def app():
     mail.init_app(_app)
     yield _app
 
-@pytest.fixture(scope ="session")
+@pytest.fixture()
 def client(app):
     client = app.test_client()
     ctx = app.app_context()
@@ -27,14 +27,14 @@ def client(app):
     yield client
     ctx.pop()
 
-@pytest.fixture(scope ="session")
+@pytest.fixture()
 def init_databse(client):
     db.create_all()
     yield db
     db.drop_all()
 
 
-@pytest.fixture(scope = "session")
+@pytest.fixture()
 def summary(client, init_databse):
     return Summary()
 

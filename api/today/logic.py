@@ -15,8 +15,10 @@ class Summary:
 
     def get_tickers(self):
         print(self.user)
+        if not Tickers.list_uniq_tickers(user_id=self.user):
+            raise KeyError("No stocks found")
         self.tickers = Tickers.list_uniq_tickers(user_id=self.user)
-        #self.tickers = []
+
 
 
     def get_db_df(self):

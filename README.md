@@ -10,12 +10,13 @@ cd stock-tracker-spa
 ```
 2. Create and activate vertual env
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv your-venv
+source your-venv/bin/activate
 ```
-3. Set env variables, edit and run prereq.sh 
+3. Set env variables: edit  `.env` file 
 ```bash
-./prereq.sh
+nano .env
+export $(cat .env)
 ```
 4. Install required python packages
 ```bash

@@ -18,8 +18,8 @@ mail.init_app(app)
 
 
 with app.app_context():
+    cache.clear()
     db.create_all()
-    cache.clear()  
 
 if __name__ == '__main__':
     app.run()

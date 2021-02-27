@@ -1,7 +1,7 @@
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-
+print('basedir', basedir)
 class Config:
     """Base config"""
     SECRET_KEY = "lidias_secret"
@@ -36,7 +36,7 @@ class DevConfig(Config):
     MAIL_USE_TLS=False
     MAIL_USE_SSL=True
     MAIL_USERNAME=os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD=os.environ.get('SECURITY_PASSWORD_SALT')
+    MAIL_PASSWORD=os.environ.get('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
 
 class TestConfig(DevConfig):

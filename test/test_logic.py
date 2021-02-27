@@ -12,6 +12,8 @@ def test_users(init_databse):
     user.save_to_db()
     myuser = UserModel.check_user(email='testemail@email')
     assert myuser.username == 'testemail'
+    record = UserModel.find_user_record(user_id=1)
+    assert record.username == 'testemail'
 
 def test_email_token():
     t = Token()
@@ -19,9 +21,8 @@ def test_email_token():
     email = t.confirm_token(token=token)
     assert email == 'play.python.test@gmail.com'
 
-def test_finduser_record(init_databse):
-    record = UserModel.find_user_record(user_id=1)
-    assert record.username == 'lid.mijas'
+
+    
     
 # def test_uniq_tickers(init_databse):
 #     # file_name = "test/test_file.json"
