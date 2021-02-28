@@ -23,9 +23,13 @@
                 New Stock
             </v-btn>
         </template>
-        <v-card
+        <v-form
         ref="form"
-        >
+        v-model="valid"
+        lazy-validation
+        @submit.prevent="save"
+      >
+        <v-card>
             <v-card-title>
                 <span class="headline">{{ formTitle }}</span>
             </v-card-title>
@@ -135,12 +139,13 @@
             :disabled="!valid"
             color="blue darken-1"
             text
-            @click="save"
+            type="submit"
             >
             Save
             </v-btn>
         </v-card-actions>
         </v-card>
+        </v-form>
     </v-dialog>
        
         
@@ -330,6 +335,7 @@ import { mapGetters } from 'vuex';
 
       async save () {
         //this.submit()
+        console.log('VALIDATe', this.validate())
         this.validate()
         await this.completeMyStockUpdate()
         //this.resetValidation()

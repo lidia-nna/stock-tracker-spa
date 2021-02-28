@@ -3,7 +3,7 @@
   <div>
     <br>
     <v-btn
-    v-if="!AreStocks"
+    v-if="EmptyStocks"
     color="#00bcd4"
     @click="$router.push('/user/mystocks')"
     >
@@ -75,7 +75,7 @@ export default {
         // symbols: 'symbols',
         items: 'allData',
         isLoggedIn: 'isLoggedIn',
-        AreStocks: 'AreStocks'
+        EmptyStocks: 'EmptyStocks'
         // headers: 'headers'
         
       }),
@@ -110,7 +110,7 @@ export default {
       }
     },
     async mounted() {
-      if (this.AreStocks) {
+      if (!this.EmptyStocks) {
         await this.initialize()
       }
     }

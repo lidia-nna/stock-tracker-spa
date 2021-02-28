@@ -42,7 +42,7 @@ const getters = {
     formTitle: (state) => {
         return state.editedIndex === -1 ? 'New Stock' : 'Edit Stock'
       },
-      AreStocks(state) {
+      EmptyStocks(state) {
         return state.myStocks.length = 0
     },
     // editedItem: (state) => {
