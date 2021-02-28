@@ -49,7 +49,6 @@ def get_weekly_data():
     try:
         chart.get_timeseries()
         ts = chart.process_long_timeseries()
-        print(ts)
     except RuntimeError as e:
         print(str(e))
         return "Error retreiving data from yfinance api", 500

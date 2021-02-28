@@ -70,7 +70,7 @@ export default {
     data: () => ({
       valid: true,
       show: false,
-      username: 'lidia',
+      username: 'demo',
       error: false,
       nameRules: [
         v => !!v || 'Name is required',

@@ -9,16 +9,21 @@ class Summary:
         self.user = user
         self.tickers = None
         self.db = None
-        self.today = dt.date.today()
+        self.today = self.get_date()
         self.live_data = None
         self.summary = pd.DataFrame()
-
     def get_tickers(self):
-        print(self.user)
+        print(self.today)
         if not Tickers.list_uniq_tickers(user_id=self.user):
             raise KeyError("No stocks found")
         self.tickers = Tickers.list_uniq_tickers(user_id=self.user)
+        print('uniq tickers summary model',self.tickers)
 
+    def get_date(self):
+            if dt.date.today().weekday() in [5, 6]: 
+                return dt.datetime.strftime(dt.date.today() - dt.timedelta(1),'%Y-%m-%d')
+            else:
+                return dt.date.today()
 
 
     def get_db_df(self):
@@ -26,16 +31,18 @@ class Summary:
         dfdb = pd.DataFrame(db_dict)
         dfdb.set_index("ticker", inplace=True)
         self.db = dfdb
-
+        print('dataframe:', self.db)
 
     def get_live_data(self):
         try:
-            today = yf.download(tickers=self.tickers, period='1d') #start=self.today)
+
+            today = yf.download(tickers=self.tickers, start=self.today) #start=self.today)
         except Exception as e:
             raise RuntimeError from e
         if len(self.tickers) > 1:
             today = today.stack().drop(['Adj Close', 'Volume'], axis=1)#.droplevel('Date', axis=0)
         else:
+            print('from api:', today)
             today = today.drop(['Adj Close', 'Volume'], axis=1)#.droplevel('Date', axis=0)
             today['Ticker'] = self.tickers[0]
             today.reset_index(inplace=True)

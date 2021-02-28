@@ -19,4 +19,5 @@ def get_summary():
         if 'No stocks found' in str(e):
             return str(e)
         return "Error generating greport", 500
+    print(summary.get_report())
     return jsonify(summary.get_report())    

@@ -10,6 +10,7 @@ def get_tickers():
     current_user = get_jwt_identity()
     try:
         Tickers.serialize_model(current_user, ID=True)
+        print(Tickers.serialize_model(current_user, ID=True))
     except Exception as e:
         print(str(e))
         return "Unsuccessful", 400
