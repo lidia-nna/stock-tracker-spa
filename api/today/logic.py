@@ -13,11 +13,10 @@ class Summary:
         self.live_data = None
         self.summary = pd.DataFrame()
     def get_tickers(self):
-        print(self.today)
         if not Tickers.list_uniq_tickers(user_id=self.user):
             raise KeyError("No stocks found")
         self.tickers = Tickers.list_uniq_tickers(user_id=self.user)
-        print('uniq tickers summary model',self.tickers)
+
 
     def get_date(self):
             if dt.date.today().weekday() in [5, 6]: 
@@ -31,7 +30,7 @@ class Summary:
         dfdb = pd.DataFrame(db_dict)
         dfdb.set_index("ticker", inplace=True)
         self.db = dfdb
-        print('dataframe:', self.db)
+
 
     def get_live_data(self):
         try:
@@ -42,7 +41,6 @@ class Summary:
         if len(self.tickers) > 1:
             today = today.stack().drop(['Adj Close', 'Volume'], axis=1)#.droplevel('Date', axis=0)
         else:
-            print('from api:', today)
             today = today.drop(['Adj Close', 'Volume'], axis=1)#.droplevel('Date', axis=0)
             today['Ticker'] = self.tickers[0]
             today.reset_index(inplace=True)
