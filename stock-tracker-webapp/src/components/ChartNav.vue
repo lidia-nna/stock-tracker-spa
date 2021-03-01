@@ -1,7 +1,5 @@
 
 <template>
-  <div>
-    <br>
     <v-btn
     v-if="EmptyStocks"
     color="#00bcd4"
@@ -49,9 +47,7 @@
        <summary-table v-if="dataLoaded" @selectedId="onSelected" :selectedRow='selectRow'></summary-table>
     </v-col>
   </v-row>
- 
   </v-card>
-</div>
 </template>
 
 <script>
@@ -72,7 +68,7 @@ export default {
     },
     computed: {
       ...mapGetters({
-        // symbols: 'symbols',
+        symbols: 'symbols',
         items: 'allData',
         isLoggedIn: 'isLoggedIn',
         EmptyStocks: 'EmptyStocks'
@@ -82,17 +78,17 @@ export default {
      
     },
     methods: {
-      ...mapActions(['getAllTimeSeries','getTickers']),
+      ...mapActions(['getMyStocks', 'getAllTimeSeries','getTickers']),
     
       async initialize() {
       try {
-        const resp = await this.getTickers()
-        if (resp == "Success") {
-          const resp2 = await this.getAllTimeSeries()
-            if (resp2 == "Success") {
-              this.dataLoaded = true
-            }
-        }
+          const resp = await this.getTickers()
+          if (resp == "Success") {
+            const resp2 = await this.getAllTimeSeries()
+              if (resp2 == "Success") {
+                this.dataLoaded = true
+              }
+          }
       } catch(error) {
         console.log(error)
       }
@@ -110,10 +106,14 @@ export default {
       }
     },
     async mounted() {
-      if (!this.EmptyStocks) {
+      const response = await this.getMyStocks()
+      if (response == "Success" && !this.EmptyStocks) {
+        console.log('Live feed: Initialize')
         await this.initialize()
-      }
+      } else {
+      console.log("Couldn't get stocks")
     }
+    } 
       
 }
 </script>

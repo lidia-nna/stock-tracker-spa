@@ -40,27 +40,30 @@ const state = {
 
 const getters = {
     formTitle: (state) => {
-        return state.editedIndex === -1 ? 'New Stock' : 'Edit Stock'
+      return state.editedIndex === -1 ? 'New Stock' : 'Edit Stock'
       },
-      EmptyStocks(state) {
-        return state.myStocks.length = 0
+    EmptyStocks(state) {
+      return state.myStocks.length == 0
     },
-    // editedItem: (state) => {
-    //   return state.editedItem
-    // }
+    symbols (state) {
+      // let arr = state.myStocks.map(ticker => ticker.ticker)
+      console.log('Inside symbol getter:', state.myStocks)
+      return [...new Set(state.myStocks.map(ticker => ticker.ticker))]
+    },
 };
 
 const actions = {
   async getMyStocks({commit}){
     try {
-    const items = await apiAxios.get('/tickers')
-      commit('setMyStocks', items.data)
-      return "Success"
+    const response = await apiAxios.get('/tickers')
+    commit('setMyStocks', response.data)
+    return "Success"
     } catch (err){
       console.log(err)
       throw err
       //throw new Error('Unable to retrieve tickers data.')
     }
+
   },
   async putMyStocks({state}) {
     try {
@@ -84,6 +87,7 @@ const actions = {
         console.error("Unable to retrieve tickers data")
         throw err;
     }
+
   },
   async completeMyStockUpdate ({state, dispatch}) {
     var resp = null
@@ -163,9 +167,9 @@ const mutations = {
   setDialogDelete (state, bool) {
     state.dialogDelete = bool
   },
-  setMyStocks(state, data) {
-    state.myStocks = data
-},
+  setMyStocks(state, payload) {
+    state.myStocks = payload
+  },
   // updateMyStocks (state) {
   //   if (state.editedIndex > -1) {
   //       Object.assign(state.myStocks[state.editedIndex], state.editedItem)

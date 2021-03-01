@@ -15,11 +15,11 @@ const state = {
     // ]
 };
 const getters = {
-    symbols (state) {
-        console.log("Symbols!")
-        let arr = state.tickers.map(ticker => ticker.ticker)
-        return [...new Set(arr)]
-    },
+    // symbols (state, getters, rootState) {
+    //     console.log("Symbols!", rootState.stocks.myStocks)
+    //     let arr = rootState.stocks.myStocks.map(stock => stock.ticker)
+    //     return [...new Set(arr)]
+    // },
     headers() {
         // if (state.tickers.length>0)
         // {return Object.keys(state.tickers[0]).map(prop =>
@@ -94,11 +94,12 @@ const getters = {
     
 // };
 const actions = {
-    getTickers({commit, rootState}) {   
-        console.log('access', rootState.auth.accessToken)
+    getTickers({commit}) {   
+        // console.log('access', rootState.auth.accessToken)
         return apiAxios.get('/summary')
         .then(response => {
             commit('setTickers', response.data) 
+            console.log('GETTickers: data', response)
             return "Success"   
         })
         .catch(error => {
@@ -106,10 +107,11 @@ const actions = {
             throw error
         })
     },
-    getAllTimeSeries({commit, state, getters}){
+    getAllTimeSeries({commit, rootState,rootGetters}){
         let container = [];
         let values = {};
-        let myPromises = getters.symbols.map(symbol => 
+        console.log('Symbols', rootState.stocks.myStocks)
+        let myPromises = rootGetters.symbols.map(symbol => 
             apiAxios.get('/charts/daily?ticker='+ symbol)
         );
 
@@ -150,8 +152,8 @@ const actions = {
 };
 
 const mutations = {
-    setTickers(state, data) {
-        state.tickers = data
+    setTickers(state, payload) {
+        state.tickers = payload
     },
     updateTickers(state, key, values) {
         console.log('tickers', state.tickers)

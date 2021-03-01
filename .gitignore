@@ -89,6 +89,7 @@ cover/
 # Flask stuff:
 instance/
 .webassets-cache
+*.db
 
 
 # PyBuilder

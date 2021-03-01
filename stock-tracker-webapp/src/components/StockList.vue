@@ -276,7 +276,7 @@ import { mapGetters } from 'vuex';
     
     computed: {
       ...mapState({
-        tickers: state => state.stocks.myStocks, 
+        tickers: rootState => rootState.stocks.myStocks, 
         headers: state => state.stocks.headers, 
         dialog: state => state.stocks.dialog,
         dialogDelete: state => state.stocks.dialogDelete,
@@ -302,7 +302,9 @@ import { mapGetters } from 'vuex';
         },
     },
     methods: {
-      ...mapMutations(['setDialog', 'setDialogDelete']),
+      ...mapMutations([
+        'setDialog', 
+        'setDialogDelete']),
       ...mapActions([
         'getMyStocks', 
         'editItem', 
@@ -368,14 +370,19 @@ import { mapGetters } from 'vuex';
       dialogDelete (val) {
         val || this.closeDelete()
       },
-      tickers: function() {
-        this.tickers == [] ? this.allData = [] : this.tickers
-      }
+      // tickers: function() {
+      //   this.tickers == [] ? this.allData = [] : this.tickers
+      // }
     },
 
     async mounted () {
-      await this.getMyStocks()
-      this.dataLoaded = true
+      console.log('Mounted hook')
+      if (this.tickers.length == 0) {
+        await this.getMyStocks()
+      } else {
+        this.dataLoaded = true
+      }
+      
     },
   }
 </script>

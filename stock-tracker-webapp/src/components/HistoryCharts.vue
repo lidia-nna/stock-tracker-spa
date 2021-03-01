@@ -9,10 +9,10 @@
       primary="true"
     >
       <v-tab
-        v-for="(item, i) in items"
+        v-for="(symbol, i) in symbols"
         :key="i"
       >
-        {{ item }}
+        {{ symbol }}
       </v-tab>
     
     <v-tabs-items dark v-model="tab" v-if="dataLoaded" >
@@ -20,20 +20,20 @@
         <v-row class="d-flex"> 
           <v-col>
             <v-tab-item class="colors" 
-              v-for="(item,i) in items"
+              v-for="(symbol,i) in symbols"
               :key="i"
             >
             <v-row class="d-flex mx-auto">
                 <v-col>
-                    <weekly-chart :symbol="item"></weekly-chart>
+                    <weekly-chart :symbol="symbol"></weekly-chart>
                 </v-col>
                 <v-col>
-                    <yearly-chart :symbol="item" ></yearly-chart>
+                    <yearly-chart :symbol="symbol" ></yearly-chart>
                 </v-col>
             </v-row>
             <v-row class="d-flex mx-auto">
               <v-col>
-                <FTChart :symbol="item"></FTChart>
+                <FTChart :symbol="symbol"></FTChart>
               </v-col>
                 
             </v-row>
@@ -68,31 +68,29 @@ export default {
       }
     },
     computed: {
-      ...mapGetters({
-        items: 'symbols',
-        isLoggedIn: 'isLoggedIn',
-        // headers: 'headers'
-        
-      }),
+      ...mapGetters(['symbols','isLoggedIn']),
      
     },
     methods: {
-      ...mapActions(['getTickers']),
+      ...mapActions(['getMyStocks']),
     
       async initialize() {
-        if (!this.items) {
-            const resp = await this.getTickers()
+        if (this.symbols.length == 0) {
+            const resp = await this.getMyStocks()
             if (resp == "Success") {
               this.dataLoaded = true
             }
         }
-        this.dataLoaded = true
+        else {
+          this.dataLoaded = true
+        }
+        
      },
       onSelected($event) {
         console.log('OnSelectedEvent:', $event)
         // this.tab = $event
-        this.items.forEach((item, i)=> {
-          if ($event == item.id) {
+        this.symbols.forEach((symbol, i)=> {
+          if ($event == symbol.id) {
             this.tab = i
         }
         });
