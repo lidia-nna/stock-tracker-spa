@@ -107,10 +107,9 @@ const actions = {
             throw error
         })
     },
-    getAllTimeSeries({commit, rootState,rootGetters}){
+    getAllTimeSeries({commit, state, rootGetters}){
         let container = [];
         let values = {};
-        console.log('Symbols', rootState.stocks.myStocks)
         let myPromises = rootGetters.symbols.map(symbol => 
             apiAxios.get('/charts/daily?ticker='+ symbol)
         );
@@ -130,6 +129,7 @@ const actions = {
                     container.push(ts)
                     state.tickers.forEach(ticker => {
                         if (ticker.ticker == response.data.symbol){
+                            console.log('last update', response.data.last_update)
                             ticker.date = response.data.last_update
                         }
                         

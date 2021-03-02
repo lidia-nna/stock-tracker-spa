@@ -29,7 +29,9 @@
         lazy-validation
         @submit.prevent="save"
       >
-        <v-card>
+        <v-card
+        class="elevation-24"
+        >
             <v-card-title>
                 <span class="headline">{{ formTitle }}</span>
             </v-card-title>
@@ -167,7 +169,8 @@
     :items="tickers"
     :search="search"
     sort-by="name"
-    class="elevation-1"
+    class="elevation-15"
+    font-size=12
   >
     <template v-slot:top>
       <v-card-title>

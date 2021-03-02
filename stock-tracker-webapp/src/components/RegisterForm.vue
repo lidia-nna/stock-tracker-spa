@@ -4,6 +4,7 @@
     v-model="valid"
     lazy-validation
     @submit.prevent="onSubmit"
+    class="rounded bccolor"
   >
     <v-card-text class="pink--text" v-if="error">{{authStatus}}</v-card-text>
     <v-card-text class="cyan--text" v-if="info">{{authStatus}}</v-card-text>
@@ -12,10 +13,12 @@
     color="#00bcd4"
     @click="resendToken"
     class="mr-4">Re-send token</v-btn>
-    <v-card>
+    <v-card
+    class="elevation-10 mb-2 pt-3 bccolor"
+    >
       <br>
       <v-row class="d-flex justify-center" >
-        <v-col cols="12" sm="6" md="6" align-content='center'>
+        <v-col cols="8" sm="7" md="7" lg="7" align-content='center'>
           <p class="text-center text-h5">
             Sign up
           </p>
@@ -178,3 +181,10 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.bccolor {
+  background-color: #272727;
+}
+
+</style>

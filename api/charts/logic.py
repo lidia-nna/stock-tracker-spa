@@ -41,12 +41,8 @@ class DailyChart(Chart):
         serialized = self.serialize(data)
         serialized['last_update']=data.Date.values[-1]
         serialized['symbol']=self.ticker
+        print(serialized)
         return serialized
-# def __init__(self, ticker_symbol):
-#     self.ticker=ticker_symbol
-#     self.period="1d"
-#     self.interval="30m"
-#     self.df_data = None
 
 class CandleChart(DailyChart):
     def __init__(self, *args, **kwargs):

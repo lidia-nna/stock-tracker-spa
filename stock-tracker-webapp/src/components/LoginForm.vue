@@ -4,12 +4,15 @@
     v-model="valid"
     lazy-validation
     @submit.prevent="onSubmit"
+    class="rounded"
   >
     <v-card-text class="pink--text" v-if="error">{{authStatus}}</v-card-text>
-    <v-card>
+    <v-card
+    class="bccolor elevation-10 mb-2 pt-5"
+    >
       <br>
       <v-row class="d-flex justify-center" >
-        <v-col cols="12" sm="6" md="6" lg="8" xl="8" align-content='center'>
+        <v-col cols="10" sm="8" md="6" lg="8" xl="8" align-content='center'>
           <p class="text-center text-h5">
             Sign in
           </p>
@@ -123,9 +126,9 @@ export default {
     },
 }
 </script>
-
 <style scoped>
-.color {
-  background-color: #333333;
+.bccolor {
+  background-color: #272727;
 }
+
 </style>

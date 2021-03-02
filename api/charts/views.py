@@ -14,6 +14,7 @@ def get_daily_chart():
     try:
         chart.get_timeseries()
         ts = chart.process_daily_timeseries()
+        print(ts['last_update'])
     except RuntimeError as e:
         print(str(e))
         return "Error retreiving data from yfinance api", 500

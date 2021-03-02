@@ -2,6 +2,7 @@
     <div>
         <chart-nav></chart-nav>
     </div>
+       
 </template>
 
 <script>

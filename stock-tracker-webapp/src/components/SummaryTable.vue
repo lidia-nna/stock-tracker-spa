@@ -19,12 +19,13 @@
             :search="search"
             :headers="headers"
             :items="items"
-            class="elevation-1"
+            class="elevation-5 row-pointer"
             @click:row="rowClick"
             item-key="id"
             single-select
             :items-per-page="5"
             align="center"
+            pointer
         >
         <!-- loading
             loading-text="Loading... Please wait" -->
@@ -72,6 +73,7 @@ export default {
     data() {
         return {
             search: '',
+            selection: false,
         }
     },
     methods: {
@@ -97,10 +99,14 @@ export default {
                 return '#D81B60'
             }
         },
-        rowClick(item, row) {      
-            row.isSelected=true;
-            row.select(true)
-            this.$emit('selectedId', item.id)
+        rowClick(item, row) {
+            this.selection=!this.selection      
+            row.isSelected=this.selection;
+            row.select(this.selection)
+            if (this.selection){
+                this.$emit('selectedId', item.id)
+            }
+            
         },
         highlight(props) {
             if (props.row.index == this.selectedRow) {
@@ -135,6 +141,10 @@ export default {
 
 <style>
 .h {
-    background-color: '#ffffff'
+    background-color: '#ffffff';
+}
+
+.row-pointer>.v-data-table__wrapper>table>tbody>tr :hover {  
+cursor: pointer;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 <v-responsive>
-  <v-card v-bind="$attrs" v-if="item" :id="item.symbol" dark >
+  <v-card  v-bind="$attrs" v-if="item" :id="item.symbol" dark >
 
 </v-card>
 </v-responsive>

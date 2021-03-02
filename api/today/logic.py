@@ -34,7 +34,6 @@ class Summary:
 
     def get_live_data(self):
         try:
-
             today = yf.download(tickers=self.tickers, start=self.today) #start=self.today)
         except Exception as e:
             raise RuntimeError from e

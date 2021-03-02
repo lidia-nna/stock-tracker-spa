@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Today from '../views/Today.vue'
 import History from '../views/History'
 import MyStocks from '../views/MyStocks'
+import RegisterForm from '../components/RegisterForm'
+import LoginForm from '../components/LoginForm'
 import store from '../store';
 
 Vue.use(VueRouter)
@@ -14,7 +16,7 @@ function loadView(view) {
 const routes = [
   {
     path: '/',
-    component: loadView('Index'),
+    component: loadView('Home'),
     meta: {
       authRequired: false
     },
@@ -29,7 +31,7 @@ const routes = [
       {
         path: 'login',
         name: 'auth-login',
-        component: loadView('Home'),
+        component: LoginForm,
         meta: {
           authRequired: false
       }
@@ -37,7 +39,7 @@ const routes = [
       {
         path: 'register',
         name: 'auth-register',
-        component: loadView('Register'),
+        component: RegisterForm,
         meta: {
           authRequired: false
         }

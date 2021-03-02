@@ -4,13 +4,12 @@ from . import tickers
 from ..models import Tickers
 
 
-@tickers.route('/tickers', endpoint='get_tickers',methods=['GET'])
+@tickers.route('/tickers', endpoint='get_tickers')
 @jwt_required()
 def get_tickers():
     current_user = get_jwt_identity()
     try:
-        Tickers.serialize_model(current_user, ID=True)
-        print(Tickers.serialize_model(current_user, ID=True))
+        stocks = Tickers.serialize_model(current_user, ID=True)
     except Exception as e:
         print(str(e))
         return "Unsuccessful", 400

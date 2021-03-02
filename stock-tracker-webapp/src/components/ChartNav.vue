@@ -10,6 +10,7 @@
     <v-card
     v-else
     :loading="!dataLoaded"
+    class="size"
     >
     <v-tabs
       v-model="tab"
@@ -121,5 +122,8 @@ export default {
 <style>
 .colors {
   background-color: var(--v-background-base);
+}
+.size {
+  min-height: 100vh;
 }
 </style>
