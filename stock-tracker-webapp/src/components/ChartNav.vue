@@ -1,11 +1,13 @@
 
 <template>
+
     <v-btn
     v-if="EmptyStocks"
     color="#00bcd4"
     @click="$router.push('/user/mystocks')"
+    class="mt-10"
     >
-      Add your stocks
+    Add your stocks
     </v-btn>
     <v-card
     v-else

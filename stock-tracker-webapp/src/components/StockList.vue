@@ -322,10 +322,11 @@ import { mapGetters } from 'vuex';
       },
 
       close () {
+        //this.resetValidation()
         this.setDialog(false)
         this.$nextTick(() => {
           this.onUpdate()
-          this.resetValidation()
+          
           //this.clear()
         })
       },
@@ -340,7 +341,6 @@ import { mapGetters } from 'vuex';
 
       async save () {
         //this.submit()
-        console.log('VALIDATe', this.validate())
         this.validate()
         await this.completeMyStockUpdate()
         //this.resetValidation()
@@ -382,6 +382,7 @@ import { mapGetters } from 'vuex';
       console.log('Mounted hook')
       if (this.tickers.length == 0) {
         await this.getMyStocks()
+        this.dataLoaded = true
       } else {
         this.dataLoaded = true
       }
