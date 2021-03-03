@@ -1,7 +1,8 @@
+from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from flask import Flask, request, jsonify
 from flask_caching import Cache
-from .config import DevConfig
+from .config import DevConfig, ProdConfig
 from .today import today
 from .ticker import ticker
 from .tickers import tickers
@@ -13,6 +14,7 @@ from .db import db
 
 def create_app(cfg = DevConfig):
     app = Flask(__name__)
+    CORS(app)
     jwt = JWTManager(app)
     app.config.from_object(cfg)
     app.register_blueprint(today)
@@ -25,7 +27,7 @@ def create_app(cfg = DevConfig):
     
     @app.route('/')
     def index():
-        return "Running API"
+        return render_template('gen/index.html')
 
     return app
     

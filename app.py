@@ -1,15 +1,13 @@
-from flask_cors import CORS
 from flask_caching import Cache
 from api import create_app
-from api.config import DevConfig 
 from api.db import db
 from api.mail import mail
 from api.cache import cache
+import os
 
 
-
-app = create_app()
-CORS(app, resources={r"/*": {"origins": ["http://localhost:8080"]}}, allow_headers=['Content-Type', 'Authorization', 'Cache-Control'], supports_credentials=True)
+cfg="api.config." + os.environ.get('CONFIG')
+app = create_app(cfg=cfg)
 
 db.init_app(app)
 cache.init_app(app)
