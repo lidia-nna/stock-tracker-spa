@@ -2,10 +2,15 @@
 
 A VueJs/Flask SPA app to track selected stocks.
 
-## Installation
+## Live demo
 
-1. Navigate to stock-tracker-spa api
+[https://lidia-nna.github.io/stock-tracker-spa]
+
+## Installation for local use
+
+1. Clone the repo and navigate to stock-tracker-spa directory
 ```bash
+git clone https://github.com/lidia-nna/stock-tracker-spa.git
 cd stock-tracker-spa
 ```
 2. Create and activate vertual env
