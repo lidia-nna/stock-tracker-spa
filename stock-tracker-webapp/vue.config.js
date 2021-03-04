@@ -38,7 +38,7 @@
 module.exports = {
 
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/stock-tracker-spa/'
+    ? '/stock-tracker-spa/stock-tracker-webapp/'
     : '/',
   transpileDependencies: [
     'vuetify'
