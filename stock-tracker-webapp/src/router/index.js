@@ -101,8 +101,8 @@ const routes = [
 const router = new VueRouter({
   //hashbang: false,
   mode: 'history',
-  //base: process.env.BASE_URL,
-  base: __dirname,
+  base: process.env.BASE_URL,
+  //base: __dirname,
   routes
 })
 router.beforeEach((to, from, next) => {

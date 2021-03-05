@@ -1,6 +1,6 @@
 const config = {
     dev : {
-        apiURL: 'http://localhost:5000'
+        apiURL: 'https://project-flaskmini.nw.r.appspot.com/'
     },
     plt : {
         layout : {

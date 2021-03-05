@@ -19,17 +19,17 @@ class Config:
     SECURITY_PASSWORD_SALT=os.environ.get('SECURITY_PASSWORD_SALT')
     MAIL_USE_TLS=False
     MAIL_USE_SSL=True
+    CACHE_TYPE='simple'
+    JWT_SECRET_KEY=os.environ.get('JWT_SECRET_KEY')
+    JWT_TOKEN_LOCATION=["headers"]
+    JWT_ACCESS_TOKEN_EXPIRES=600
+    UPLOAD_EXTENSIONS = ['.json']
 
 class DevConfig(Config):
     ENV = 'development'
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.db')
     PORT = 5000
-    UPLOAD_EXTENSIONS = ['.json']
-    CACHE_TYPE='simple'
-    JWT_SECRET_KEY=os.environ.get('JWT_SECRET_KEY')
-    JWT_TOKEN_LOCATION=["headers"]
-    JWT_ACCESS_TOKEN_EXPIRES=600
     CORS_ORIGINS="http://localhost:8080" #process.env.VUE_SERVER
     CORS_HEADERS=['Content-Type', 'Authorization', 'Cache-Control']
     CORS_SUPPORTS_CREDENTIALS=True
@@ -44,13 +44,17 @@ class TestConfig(DevConfig):
 
 class ProdConfig(Config):
     ENV = 'production'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'prod.db')
-    PORT = 5000
-    # DB_HOST = os.environ["DB_HOST"]
-    # DB_PORT = os.environ.get("DB_PORT", 3306)
-    # DB_DATABASE = os.environ["DB_DATABASE"]
-    # DB_USER = os.environ["DB_USER"]
-    # DB_PASSWORD = os.environ["DB_PASSWORD"]
-    # SQLALCHEMY_DATABASE_URI = (
-    #     f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}"
-    # )
+    PROJECT_ID = os.environ.get('PROJECT_ID')
+    DB_NAME = os.environ.get("DB_NAME")
+    DB_INSTANCE_NAME = os.environ.get('DB_INSTANCE_NAME')
+    DB_INSTANCE_REGION = os.environ.get("DB_INSTANCE_REGION")
+    DB_PUBLIC_PI_ADDRESS = os.environ.get("DB_PUBLIC_PI_ADDRESS")
+    DB_USER = os.environ.get("DB_USER")
+    DB_PASSWORD = os.environ.get("DB_PASSWORD")
+    SQLALCHEMY_DATABASE_URI = (
+        f"postgres+pg8000://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock=/cloudsql/{PROJECT_ID}:{DB_INSTANCE_REGION}:{DB_INSTANCE_NAME}/.s.PGSQL.5432"
+    )
+        # postgres+pg8000://<db_user>:<db_pass>@/<db_name>?unix_sock=<socket_path>/<cloud_sql_instance_name>/.s.PGSQL.5432
+        #f"mysql + mysqldb://root:{PASSWORD}@{DB_PUBLIC_PI_ADDRESS}/{DBNAME}?unix_socket =/cloudsql/{PROJECT_ID}:{INSTANCE_NAME}"
+         # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=<socket_path>/<cloud_sql_instance_name>
+         #project-flaskmini:europe-west2:trade-demo

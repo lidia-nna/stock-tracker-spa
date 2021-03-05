@@ -27,7 +27,8 @@ def create_app(cfg = DevConfig):
     
     @app.route('/')
     def index():
-        return render_template('gen/index.html')
+        return 'Running API'
+        #return render_template('gen/index.html')
 
     return app
     
