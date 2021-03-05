@@ -24,7 +24,7 @@
             </v-btn>
         </template>
         <v-card
-        ref = "form"
+        ref="form"
         >
             <v-card-title>
                 <span class="headline">{{ formTitle }}</span>
@@ -337,13 +337,13 @@ import { mapGetters } from 'vuex';
         
       },
       validate () {
-        this.$refs.form.validate()
+        this.$refs["form"].validate()
       },
       reset () {
-        this.$refs.form.reset()
+        this.$refs['form'][0].reset()
       },
       resetValidation () {
-        this.$refs.form.resetValidation()
+        this.$refs['form'][0].resetValidation()
       },
 
     //   clear () {
