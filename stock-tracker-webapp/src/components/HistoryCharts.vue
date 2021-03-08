@@ -9,20 +9,26 @@
       primary="true"
     >
       <v-tab
-        v-for="(symbol, i) in symbols"
-        :key="i"
+        v-for="symbol in symbols"
+        :key="symbol.id"
       >
         {{ symbol }}
       </v-tab>
     
-    <v-tabs-items dark v-model="tab" v-if="dataLoaded" >
+    <v-tabs-items dark v-model="tab" v-cloak>
       <!-- <v-container> -->
         <v-row class="d-flex"> 
           <v-col>
             <v-tab-item class="colors" 
-              v-for="(symbol,i) in symbols"
-              :key="i"
+              v-for="symbol in symbols"
+              :key="symbol.id"
             >
+            <v-row class="d-flex mx-auto">
+              <v-col>
+                <FTChart :symbol="symbol"></FTChart>
+              </v-col>
+                
+            </v-row>
             <v-row class="d-flex mx-auto">
                 <v-col>
                     <weekly-chart :symbol="symbol"></weekly-chart>
@@ -30,12 +36,6 @@
                 <v-col>
                     <yearly-chart :symbol="symbol" ></yearly-chart>
                 </v-col>
-            </v-row>
-            <v-row class="d-flex mx-auto">
-              <v-col>
-                <FTChart :symbol="symbol"></FTChart>
-              </v-col>
-                
             </v-row>
               
             </v-tab-item> 
@@ -52,13 +52,17 @@
 </template>
 
 <script>
-import WeeklyChart from './WeeklyChart'
-import YearlyChart from './YearlyChart.vue'
-import FTChart from './FTChart'
+//import WeeklyChart from './WeeklyChart'
+//import YearlyChart from './YearlyChart.vue'
+//import FTChart from './FTChart'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
- components: { WeeklyChart, YearlyChart, FTChart },
+ components: { 
+   WeeklyChart: () => import(/* webpackPrefetch: true */ `../components/WeeklyChart.vue`), 
+   YearlyChart: () => import(/* webpackPrefetch: true */ `../components/YearlyChart.vue`), 
+   FTChart: () => import(/* webpackPrefetch: true */ `../components/FTChart.vue`)
+   },
     name:"HistoryChart",
     data () {
       return {
@@ -106,6 +110,9 @@ export default {
 </script>
 
 <style>
+[v-cloak] {
+  display: none;
+}
 .colors {
   background-color: var(--v-background-base);
 }

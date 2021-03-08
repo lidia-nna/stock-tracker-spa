@@ -106,7 +106,7 @@ export default {
       console.log('CandleChart: mounted, current route:',this.$route)
       await this.lastWeeksTrace(this.symbol)
       this.plotChart()
-
+       
      
    
     
