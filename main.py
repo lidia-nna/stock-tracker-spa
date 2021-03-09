@@ -6,16 +6,23 @@ from api.cache import cache
 from api.models import UserModel
 import os
 import datetime
+from dotenv import load_dotenv
 
+__DEV__ = True
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+if __DEV__:
+    load_dotenv(os.path.join(basedir, '.env'))
 cfg="api.config." + os.environ.get('CONFIG')
+
 app = create_app(cfg=cfg)
 
 db.init_app(app)
 cache.init_app(app)
 mail.init_app(app)
-#app.app_context().push()
 
+#app.app_context().push()
 
 with app.app_context():
     cache.clear()

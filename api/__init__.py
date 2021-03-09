@@ -9,6 +9,7 @@ from .tickers import tickers
 from .charts import charts
 from .users import users
 from .db import db
+from .limiter import limiter
 
 
 
@@ -17,6 +18,7 @@ def create_app(cfg = DevConfig):
     CORS(app)
     jwt = JWTManager(app)
     app.config.from_object(cfg)
+    limiter.init_app(app)
     app.register_blueprint(today)
     app.register_blueprint(ticker)
     app.register_blueprint(tickers)

@@ -55,8 +55,8 @@ class Summary:
         summary = self.live_data.join(self.db, on="ticker")
 
         #add simple stats
-        summary['upper_threshold'] = (summary['upper_threshold']/100 + 1) * summary["share_price"]
-        summary['lower_threshold'] = (summary['lower_threshold']/100 - 1) * summary["share_price"] * (-1)
+        # summary['upper_threshold'] = (summary['upper_threshold']/100 + 1) * summary["share_price"]
+        # summary['lower_threshold'] = (summary['lower_threshold']/100 - 1) * summary["share_price"] * (-1)
         summary['margin'] = (summary['live'] - summary['share_price'])*100/summary['share_price'] 
         summary['total_earnings'] = (summary['live'] - summary['share_price'])*summary['share_count']/100
         summary['reset_threshold'] = summary.apply(lambda x: x['live'] > x['upper_threshold'] or x['live'] < x['lower_threshold'], axis=1)
@@ -72,6 +72,7 @@ class Summary:
         #change date-time object to string
         summary.date = summary.date.dt.strftime('%Y-%m-%d %H:%M:%S')
         self.summary = summary
+        print ('summary:',self.summary)
         
 
 
