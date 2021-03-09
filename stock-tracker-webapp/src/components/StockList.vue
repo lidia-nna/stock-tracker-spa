@@ -17,8 +17,7 @@
                 class="mb-2"
                 v-bind="attrs"
                 v-on="on"
-                @click="setDialog(!dialog)"
-                
+                @click="setDialog(!dialog)"  
             >
                 New Stock
             </v-btn>
@@ -107,7 +106,7 @@
                 >
                 <v-text-field
                     v-model="editedItem.lower_threshold"
-                    label="Lower threshold (%)"
+                    label="Lower threshold"
                     :rules="limitRules"
                     validate-on-blur
                 ></v-text-field>
@@ -119,7 +118,7 @@
                 >
                 <v-text-field
                     v-model="editedItem.upper_threshold"
-                    label="Upper threshold (%)"
+                    label="Upper threshold"
                     :rules="limitRules"
                     validate-on-blur
                 ></v-text-field>
@@ -234,25 +233,26 @@ import { mapGetters } from 'vuex';
         search: "",
         dataLoaded: false,
         valid: true,
-        firstname: '',
-        lastname: '',
+        // firstname: '',
+        // lastname: '',
         nameRules: [
           v => !!v || 'Name is required',
           v => v.length <= 10 || 'Name must be less than 10 characters',
         ],
-        email: '',
+        // email: '',
         symbolRules: [
           v => !!v || 'Symbol is required',
           v => /^[A-Z]+/.test(v) || 'Symbol must be valid',
         ],
+        
         priceRules: [
-          v => !!v || 'Symbol is required',
-          v => /^\d{1,10}\.\d{0,2}$/.test(v) || 'Price must be a float number',
+          v => !!v || 'Price is required',
+          v => /^\d{1,10}(\.\d{0,2}){0,1}$/.test(v) || 'Price must be an int or a float number',
         ],
         limitRules:[
           v => !!v || 'Threshold is required',
-          v => 100>= v > 0 || 'Threshold must be (1-100) %',
-          v => /^\d+$/.test(v) || 'Threshold must be (1-100) %'
+          // v => 100>= v > 0 || 'Threshold must be (1-100) %',
+          v => /^\d+$/.test(v) || 'Threshold must be a number'
         ],
         countRules:[
           v => !!v || 'Number of shares is required',

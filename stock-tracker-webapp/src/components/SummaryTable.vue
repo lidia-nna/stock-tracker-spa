@@ -39,6 +39,7 @@
             <v-chip
                 :color="liveColor(item)"
                 dark
+                label
             >
                 {{ item.live }}
             </v-chip>
@@ -47,6 +48,7 @@
             <v-chip
                 :color="marginColor(item)"
                 dark
+                label
             >
                 {{ item.margin }}
             </v-chip>
@@ -55,6 +57,7 @@
             <v-chip
                 :color="resetThColor(item)"
                 dark
+                label
             >
                 {{ item.reset_threshold }}
             </v-chip>

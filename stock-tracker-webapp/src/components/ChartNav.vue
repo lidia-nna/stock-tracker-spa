@@ -18,6 +18,7 @@
       v-model="tab"
       grow
       primary="true"
+      active-class="activeOverlay"  
     >
       <v-tab
         v-for="item in items"
@@ -129,5 +130,8 @@ export default {
 }
 .size {
   min-height: 100vh;
+}
+.activeOverlay {
+  background-color: rgb(0, 188, 212, 0.25)
 }
 </style>

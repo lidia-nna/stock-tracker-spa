@@ -30,8 +30,9 @@ switch(command) {
     break
   case 'serve':
     config = {
+      publicPath: '/',
       devServer: {
-        proxy: 'https://project-flaskmini.nw.r.appspot.com/' //'http://localhost:5000'
+        proxy: 'http://localhost:5000' //'https://project-flaskmini.nw.r.appspot.com/' 
       }
     }
 }

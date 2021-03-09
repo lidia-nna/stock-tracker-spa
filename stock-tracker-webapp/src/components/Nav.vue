@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" class="rounded-lg" overlay-color="#00bcd4" app>
-      <v-list rounded>
+    <v-navigation-drawer v-model="drawer" overlay-color="#00bcd4" app>
+      <v-list>
         <v-list-item>
           <v-img src="../assets/StockTracker-logo.png"  width="50%"></v-img>
           <!-- <v-list-item-avatar size="70" tile></v-list-item-avatar> -->
