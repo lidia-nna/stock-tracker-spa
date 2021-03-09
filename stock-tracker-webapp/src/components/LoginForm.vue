@@ -5,7 +5,7 @@
     lazy-validation
     @submit.prevent="onSubmit"
     class="rounded"
-  >
+    >
     <v-card-text class="pink--text" v-if="error">{{authStatus}}</v-card-text>
     <v-card
     class="bccolor elevation-10 mb-2 pt-5"
@@ -127,6 +127,9 @@ export default {
 }
 </script>
 <style scoped>
+[v-cloak] {
+  display: none;
+}
 .bccolor {
   background-color: #272727;
 }

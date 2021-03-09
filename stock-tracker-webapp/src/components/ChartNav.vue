@@ -2,7 +2,7 @@
 <template>
 
     <v-btn
-    v-if="EmptyStocks"
+    v-if="addStocks"
     color="#00bcd4"
     @click="$router.push('/user/mystocks')"
     class="mt-10"
@@ -18,10 +18,11 @@
       v-model="tab"
       grow
       primary="true"
+      active-class="activeOverlay"  
     >
       <v-tab
-        v-for="(item, i) in items"
-        :key="i"
+        v-for="item in items"
+        :key="item.id"
       >
         {{ item.symbol }}
       </v-tab>
@@ -31,8 +32,8 @@
         <v-row class="d-flex"> 
           <v-col>
             <v-tab-item class="colors" 
-              v-for="(item, i) in items"
-              :key="i"
+              v-for="item in items"
+              :key="item.id"
             >
               <daily-chart :item="item" ></daily-chart>
             </v-tab-item> 
@@ -67,6 +68,7 @@ export default {
         tab: null,
         dataLoaded: false,
         selectRow: this.tab,
+        addStocks: null,
       }
     },
     computed: {
@@ -78,11 +80,10 @@ export default {
         // headers: 'headers'
         
       }),
-     
+
     },
     methods: {
       ...mapActions(['getMyStocks', 'getAllTimeSeries','getTickers']),
-    
       async initialize() {
       try {
           const resp = await this.getTickers()
@@ -113,9 +114,11 @@ export default {
       if (response == "Success" && !this.EmptyStocks) {
         console.log('Live feed: Initialize')
         await this.initialize()
+      } else if (response == "Success" && this.EmptyStocks) {
+        this.addStocks=true
       } else {
-      console.log("Couldn't get stocks")
-    }
+        console.log("Couldn't get stocks")
+      }
     } 
       
 }
@@ -127,5 +130,8 @@ export default {
 }
 .size {
   min-height: 100vh;
+}
+.activeOverlay {
+  background-color: rgb(0, 188, 212, 0.25)
 }
 </style>

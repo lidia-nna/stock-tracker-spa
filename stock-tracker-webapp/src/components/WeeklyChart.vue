@@ -62,7 +62,7 @@ export default {
             {pattern: 'hour', bounds: [17,8]},
             {pattern: 'day of week', bounds: ['sat','mon']}
           ],
-        rangeselector: {
+          rangeselector: {
               x: 0,
               y: 1.2,
               xanchor: 'left',
@@ -72,6 +72,9 @@ export default {
               },
               bgcolor: this.config.plt.rangeslider.buttons.bgcolor,
               activecolor: this.config.plt.rangeslider.buttons.activecolor,
+              //bordercolor: '#aaffff',//this.config.plt.rangeslider.buttons.bgcolor,
+              //borderwidth: '5px',
+              //borderradius: '20px',
               buttons: [{
                   step: 'day',
                   stepmode: 'backward',
@@ -86,7 +89,7 @@ export default {
                   step: 'all',
                   label: '1 WEEK'
               }]
-            }
+          }
         },
         yaxis: {
           autorange: true,
@@ -106,7 +109,7 @@ export default {
       console.log('CandleChart: mounted, current route:',this.$route)
       await this.lastWeeksTrace(this.symbol)
       this.plotChart()
-
+       
      
    
     

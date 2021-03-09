@@ -2,11 +2,14 @@
 <template>
     <v-card 
     :loading="!dataLoaded"
+    v-cloak
     >
     <v-tabs
       v-model="tab"
       grow
+      active-class="activeOverlay"
       primary="true"
+      color="#00bcd4"
     >
       <v-tab
         v-for="(symbol, i) in symbols"
@@ -15,7 +18,7 @@
         {{ symbol }}
       </v-tab>
     
-    <v-tabs-items dark v-model="tab" v-if="dataLoaded" >
+    <v-tabs-items dark v-model="tab">
       <!-- <v-container> -->
         <v-row class="d-flex"> 
           <v-col>
@@ -23,6 +26,7 @@
               v-for="(symbol,i) in symbols"
               :key="i"
             >
+           
             <v-row class="d-flex mx-auto">
                 <v-col>
                     <weekly-chart :symbol="symbol"></weekly-chart>
@@ -31,7 +35,7 @@
                     <yearly-chart :symbol="symbol" ></yearly-chart>
                 </v-col>
             </v-row>
-            <v-row class="d-flex mx-auto">
+             <v-row class="d-flex mx-auto">
               <v-col>
                 <FTChart :symbol="symbol"></FTChart>
               </v-col>
@@ -52,13 +56,20 @@
 </template>
 
 <script>
-import WeeklyChart from './WeeklyChart'
-import YearlyChart from './YearlyChart.vue'
-import FTChart from './FTChart'
+// import WeeklyChart from './WeeklyChart'
+// import YearlyChart from './YearlyChart.vue'
+// import FTChart from './FTChart'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
- components: { WeeklyChart, YearlyChart, FTChart },
+ components: { 
+   WeeklyChart: () => import(/* webpackPrefetch: true */ `../components/WeeklyChart.vue`), 
+   YearlyChart: () => import(/* webpackPrefetch: true */ `../components/YearlyChart.vue`), 
+   FTChart: () => import(/* webpackPrefetch: true */ `../components/FTChart.vue`)
+  // WeeklyChart,
+  // YearlyChart,
+  // FTChart
+   },
     name:"HistoryChart",
     data () {
       return {
@@ -106,6 +117,12 @@ export default {
 </script>
 
 <style>
+[v-cloak] {
+  display: none;
+}
+.activeOverlay {
+  background-color: rgb(0, 188, 212, 0.25)
+}
 .colors {
   background-color: var(--v-background-base);
 }

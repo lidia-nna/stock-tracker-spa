@@ -85,6 +85,7 @@ const getters = {
             }
             return stock
         })
+        all_after.sort((a, b) => (a.symbol > b.symbol) ? 1 : -1)
         return all_after
     }
 };

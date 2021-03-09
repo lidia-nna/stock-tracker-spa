@@ -1,6 +1,6 @@
 <template>
   <v-row class="gradient" justify="center" align="start">
-    <v-col cols='8' sm="7" md="5" lg="4" xl="4" align="center"> 
+    <v-col cols='8' sm="7" md="5" lg="4" xl="4" align="center" v-cloak> 
       <v-img src="../assets/logo.png" width="47%" alt=""></v-img>
       <router-view></router-view>
     </v-col>
@@ -50,7 +50,9 @@ export default {
 }
 </script>
 <style scoped>
-
+[v-cloak] {
+  display: none;
+}
 .gradient {
   min-height: 100%;
   background: linear-gradient(125deg,#1e1e1e 10%,#00bcd4 160%);

@@ -3,8 +3,10 @@ import VueRouter from 'vue-router'
 import Today from '../views/Today.vue'
 import History from '../views/History'
 import MyStocks from '../views/MyStocks'
+import Home from '../views/Home'
 import RegisterForm from '../components/RegisterForm'
 import LoginForm from '../components/LoginForm'
+//import Index from '../views/Index'
 import store from '../store';
 
 Vue.use(VueRouter)
@@ -12,11 +14,15 @@ Vue.use(VueRouter)
 function loadView(view) {
   return () => import(`../views/${view}.vue`);
 }
+// function loadComponent(comp) {
+//   return () => import(`../components/${comp}.vue`);
+// }
 
 const routes = [
   {
     path: '/',
-    component: loadView('Home'),
+    //component: loadView('Home'),
+    component: Home,
     meta: {
       authRequired: false
     },
@@ -31,6 +37,7 @@ const routes = [
       {
         path: 'login',
         name: 'auth-login',
+        //component: loadComponent('LoginForm'),
         component: LoginForm,
         meta: {
           authRequired: false
@@ -39,6 +46,7 @@ const routes = [
       {
         path: 'register',
         name: 'auth-register',
+        //component: loadComponent('RegisterForm'),
         component: RegisterForm,
         meta: {
           authRequired: false
@@ -49,6 +57,7 @@ const routes = [
   {
     path: '/user',
     component: loadView('Index'),
+    //component: Index,
     meta: {
       authRequired: true
     },

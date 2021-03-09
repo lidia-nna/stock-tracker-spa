@@ -48,7 +48,7 @@ const getters = {
     symbols (state) {
       // let arr = state.myStocks.map(ticker => ticker.ticker)
       console.log('Inside symbol getter:', state.myStocks)
-      return [...new Set(state.myStocks.map(ticker => ticker.ticker))]
+      return [...new Set(state.myStocks.map(ticker => ticker.ticker))].sort()
     },
 };
 
