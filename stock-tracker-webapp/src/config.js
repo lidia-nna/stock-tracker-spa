@@ -1,6 +1,6 @@
 const config = {
     dev : {
-        apiURL: ''//'https://project-flaskmini.nw.r.appspot.com/'
+        apiURL: process.env.VUE_APP_URL //'https://project-flaskmini.nw.r.appspot.com/'
     },
     plt : {
         layout : {

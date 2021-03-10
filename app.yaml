@@ -1,0 +1,10 @@
+runtime: nodejs14
+handlers:
+  # Serve all static files with urls ending with a file extension
+- url: /(.*\..+)$ 
+  static_files: stock-tracker-webapp/dist/\1
+  upload: stock-tracker-webapp/dist/(.*\..+)$
+  # catch all handler to index.html
+- url: /.*
+  static_files: stock-tracker-webapp/dist/index.html
+  upload: stock-tracker-webapp/dist/index.html
