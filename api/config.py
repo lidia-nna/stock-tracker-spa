@@ -1,6 +1,5 @@
 import os
 
-
 basedir = os.path.abspath(os.path.dirname(__file__))
 #load_dotenv(os.path.join(basedir, '.env')) #doesn't seem to work
 
@@ -30,7 +29,7 @@ class DevConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.db')
     PORT = 5000
-    CORS_ORIGINS="http://localhost:8080" #process.env.VUE_SERVER
+    CORS_ORIGINS="http://localhost:8080" 
     CORS_HEADERS=['Content-Type', 'Authorization', 'Cache-Control']
     CORS_SUPPORTS_CREDENTIALS=True
    
@@ -44,6 +43,9 @@ class TestConfig(DevConfig):
 
 class ProdConfig(Config):
     ENV = 'production'
+    CORS_ORIGINS=os.environ.get('VUE_URL')
+    CORS_HEADERS=['Content-Type', 'Authorization', 'Cache-Control']
+    CORS_SUPPORTS_CREDENTIALS=True
     PROJECT_ID = os.environ.get('PROJECT_ID')
     DB_NAME = os.environ.get("DB_NAME")
     DB_INSTANCE_NAME = os.environ.get('DB_INSTANCE_NAME')
