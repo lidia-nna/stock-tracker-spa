@@ -7,5 +7,6 @@ stock-tracker-webapp/package-lock.json
 stock-tracker-webapp/README.md
 .git
 .gitignore
+.github/
 
 
