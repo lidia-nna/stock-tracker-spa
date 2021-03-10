@@ -44,6 +44,7 @@ const getters = {
       },
     EmptyStocks(state) {
       return state.myStocks.length == 0
+
     },
     symbols (state) {
       // let arr = state.myStocks.map(ticker => ticker.ticker)
