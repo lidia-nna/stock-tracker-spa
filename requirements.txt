@@ -5,7 +5,7 @@ async-generator==1.10
 attrs==20.3.0
 backcall==0.2.0
 bleach==3.2.2
-bs4==0.0.1
+blinker==1.4
 certifi==2020.12.5
 cffi==1.14.4
 chardet==4.0.0
@@ -22,12 +22,14 @@ Flask-JWT-Extended==4.0.2
 Flask-Limiter==1.4
 Flask-Mail==0.9.1
 Flask-SQLAlchemy==2.4.4
+gunicorn==20.0.4
 idna==2.10
 iniconfig==1.1.1
 itsdangerous==1.1.0
 jedi==0.18.0
 Jinja2==2.11.2
 jsonschema==3.2.0
+limits==1.5.1
 lxml==4.6.2
 MarkupSafe==1.1.1
 mistune==0.8.4
@@ -61,6 +63,8 @@ pyquery==1.4.3
 pyrsistent==0.17.3
 pytest==6.2.2
 python-dateutil==2.8.1
+python-dotenv==0.15.0
+python-http-client==3.3.2
 pytz==2020.5
 pyzmq==21.0.1
 requests==2.25.1
@@ -82,5 +86,4 @@ wcwidth==0.2.5
 webencodings==0.5.1
 websockets==8.1
 Werkzeug==1.0.1
-yahoo-fin==0.8.6
 yfinance==0.1.55

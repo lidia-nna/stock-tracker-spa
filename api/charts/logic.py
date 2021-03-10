@@ -30,9 +30,22 @@ class DailyChart(Chart):
         #print(args, kwargs)
 
     def datetime2str(self, df, datetime_c):
+        #print(df)
         df[datetime_c]=df[datetime_c].dt.strftime('%Y-%m-%d %H:%M:%S')
 
     def process_daily_timeseries(self):
+        ###############to test
+        if self.df_data.empty:
+            try:
+                self.df_data = ts.history(start=dt.date.today(), interval=self.interval) 
+            except Exception as e:
+                print(str(e))
+                raise Exception from e
+            else:
+                if self.df_data.empty:
+                    raise Exception('Cant download data for today')
+                return self.process_daily_timeseries()
+        #####################
         data = self.df_data[['Close']]
         data.reset_index(inplace=True)
         data = data.round(decimals=2)
@@ -41,7 +54,7 @@ class DailyChart(Chart):
         serialized = self.serialize(data)
         serialized['last_update']=data.Date.values[-1]
         serialized['symbol']=self.ticker
-        print(serialized)
+        #print(serialized)
         return serialized
 
 class CandleChart(DailyChart):

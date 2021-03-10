@@ -1,16 +1,9 @@
 runtime: python38
+entrypoint: gunicorn -b :$PORT main:app
 includes:
  - env_variables.yaml
-# env_variables:
-#   MAIL_USERNAME: play.python.test@gmail.com
-#   MAIL_PASSWORD: codeSmart2020
-#   MAIL_DEFAULT_SENDER: play.python.test@gmail.com
-#   SECRET_KEY: lidias_secret
-#   JWT_SECRET_KEY: thiskeyisserious
-#   SECURITY_PASSWORD_SALT: codeSmart2020
-#   CONFIG: ProdConfig
 
-# - url: /.*
-#   secure: always
+  # - url: /.*
+  #   secure: always
 #   redirect_http_response_code: 301
 #   script: auto
