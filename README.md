@@ -1,4 +1,5 @@
-![Logo](stock-tracker-webapp/src/assets/StockTracker-logo.png)
+<p align="center"><img src="stock-tracker-webapp/src/assets/StockTracker-logo.png" width="400"></p>
+
 
 ## Preview
 ![Preview](demo/demo.gif)
