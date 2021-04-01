@@ -11,7 +11,7 @@ A simple VueJs/Flask SPA web app is a bespoke dashboard which helps track stocks
 The stocks can ben added using Yahoo finance symbols (*My Stocks*), the user sets upper and lower threshold values to monitor gain/loss. Once the threshold has been reached user should in theory either sell the shares or reset the threshold - that's what app will suggest. 
 
 ## Live demo
-[Live demo](https://stock-tracker-webapp.nw.r.appspot.com/)
+[Live demo](https://project-flaskmini.nw.r.appspot.com/)
 
 
 ## How to use
