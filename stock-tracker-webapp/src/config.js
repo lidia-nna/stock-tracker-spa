@@ -1,6 +1,6 @@
 const config = {
     dev : {
-        apiURL: process.env.VUE_APP_URL
+        apiURL: ""//process.env.VUE_APP_URL
     },
     plt : {
         layout : {

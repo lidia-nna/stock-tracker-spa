@@ -23,10 +23,9 @@ __pycache__/
 # Ignored by the build system
 /setup.cfg
 /setup.py
-stock-tracker-webapp/
+**/stock-tracker-webapp/
 dispatch.yaml
-test
+**/test
 README.md
 api/dev.db
-api/test/
-
+**/demo

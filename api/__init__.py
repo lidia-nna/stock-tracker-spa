@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_caching import Cache
-from .config import DevConfig, ProdConfig
+from .config import DevConfig
 from .today import today
 from .ticker import ticker
 from .tickers import tickers
@@ -29,8 +29,8 @@ def create_app(cfg = DevConfig):
     
     @app.route('/')
     def index():
-        return 'Running API'
-        #return render_template('gen/index.html')
+        #return 'Running API'
+        return render_template('index.html')
 
     return app
     

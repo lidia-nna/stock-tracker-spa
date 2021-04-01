@@ -88,7 +88,10 @@ cover/
 # Flask stuff:
 instance/
 .webassets-cache
-api/*.db
+**/dev.db
+**/prod.db
+**/api/static/
+**/api/templates/
 test/*.db
 *.db
 
@@ -120,6 +123,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+.vscode
 env_variables.yaml
 .venv
 env/

@@ -43,21 +43,21 @@ class TestConfig(DevConfig):
 
 class ProdConfig(Config):
     ENV = 'production'
-    CORS_ORIGINS=os.environ.get('VUE_URL')
+    #CORS_ORIGINS=os.environ.get('VUE_URL')
     #CORS_RESOURCES='r”/*”'
-    CORS_HEADERS=['Content-Type', 'Authorization', 'Cache-Control']
-    CORS_SUPPORTS_CREDENTIALS=True
+    #CORS_HEADERS=['Content-Type', 'Authorization', 'Cache-Control']
+    #CORS_SUPPORTS_CREDENTIALS=True
     PROJECT_ID = os.environ.get('PROJECT_ID')
-    DB_NAME = os.environ.get("DB_NAME")
-    DB_INSTANCE_NAME = os.environ.get('DB_INSTANCE_NAME')
-    DB_INSTANCE_REGION = os.environ.get("DB_INSTANCE_REGION")
-    DB_PUBLIC_PI_ADDRESS = os.environ.get("DB_PUBLIC_PI_ADDRESS")
-    DB_USER = os.environ.get("DB_USER")
-    DB_PASSWORD = os.environ.get("DB_PASSWORD")
-    SQLALCHEMY_DATABASE_URI = (
-        f"postgres+pg8000://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock=/cloudsql/{PROJECT_ID}:{DB_INSTANCE_REGION}:{DB_INSTANCE_NAME}/.s.PGSQL.5432"
-    )
-        # postgres+pg8000://<db_user>:<db_pass>@/<db_name>?unix_sock=<socket_path>/<cloud_sql_instance_name>/.s.PGSQL.5432
-        #f"mysql + mysqldb://root:{PASSWORD}@{DB_PUBLIC_PI_ADDRESS}/{DBNAME}?unix_socket =/cloudsql/{PROJECT_ID}:{INSTANCE_NAME}"
-         # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=<socket_path>/<cloud_sql_instance_name>
-         #project-flaskmini:europe-west2:trade-demo
+    BUCKET_NAME = os.environ.get('BUCKET_NAME')
+    DB_NAME = os.environ.get('DB_FILE_NAME')
+    DB_TMP_PATH = os.environ.get('DB_LOCAL_PATH')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + str(os.environ.get('DB_LOCAL_PATH'))
+    #DB_NAME = os.environ.get("DB_NAME")
+    #DB_INSTANCE_NAME = os.environ.get('DB_INSTANCE_NAME')
+    #DB_INSTANCE_REGION = os.environ.get("DB_INSTANCE_REGION")
+    #DB_PUBLIC_PI_ADDRESS = os.environ.get("DB_PUBLIC_PI_ADDRESS")
+    #DB_USER = os.environ.get("DB_USER")
+    #DB_PASSWORD = os.environ.get("DB_PASSWORD")
+    #SQLALCHEMY_DATABASE_URI = (
+    #    f"postgres+pg8000://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock=/cloudsql/{PROJECT_ID}:{DB_INSTANCE_REGION}:{DB_INSTANCE_NAME}/.s.PGSQL.5432"
+    #)
