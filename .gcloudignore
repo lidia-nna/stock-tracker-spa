@@ -29,3 +29,15 @@ dispatch.yaml
 README.md
 api/dev.db
 **/demo
+stock-tracker-webapp/node_modules/
+stock-tracker-webapp/.env.*
+stock-tracker-webapp/src/
+stock-tracker-webapp/public/
+stock-tracker-webapp/babel.config.js
+stock-tracker-webapp/package-lock.json
+stock-tracker-webapp/README.md
+.git
+.gitignore
+.github/
+
+
