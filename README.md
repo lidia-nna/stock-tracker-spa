@@ -58,7 +58,7 @@ pip install -r requirements.txt
 5. Run API
 
 ```bash
-python ./main.py
+python main.py
 ```
 6. Navigate to web app component
 ```bash
